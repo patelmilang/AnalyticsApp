@@ -59,7 +59,6 @@ exports.login = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-    
     const user = await authService.findUserById(req.user.id);
     return res.json({
         data: user,
@@ -114,7 +113,7 @@ exports.verify_account = async (req, res) => {
         // });
         // if (!token) return res.status(400).send("Invalid link");
 
-        await authService.update_user_verification(req.params.id);
+        await authService.update_user_verification(req.params);
 
 
         res.json({ message: "email verified sucessfully" });
@@ -140,13 +139,14 @@ exports.resetpassword = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-
-    const user = await authService.findUserByEmail(req.body.email);
+console.log(req.body);
+    const user = await authService.findUserById(req.user.id)
     if (user) {
-        const result = await authService.update_profile(req.body, req.file.filename);
+        
+        const result = await authService.update_profile(req.body, req.file.filename,req.user.id);
         return res.json({
-            data: [],
-            message: 'reset password successfully.'
+            data: result,
+            message: 'updated successfully.'
         });
     }
     return res.status(400).json({ message: 'Unauthorized.' });
