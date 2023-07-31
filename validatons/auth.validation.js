@@ -9,6 +9,8 @@ const validatePassword = (value) => {
 
 module.exports = {
     register: Joi.object().keys({
+        firstname: Joi.string().optional(),
+        lastname: Joi.string().optional(),
         email: Joi.string().email().required(),
         password: Joi.string().min(4).max(16).required()//.external(validatePassword)
     }),
