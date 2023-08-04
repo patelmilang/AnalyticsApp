@@ -91,5 +91,5 @@ const UserModel = sequelize.define('User', {
         type:DataTypes.ENUM(['LOCAL','GOOGLE','FACEBOOK'])
     }
 });
-UserModel.sync();
+//UserModel.sync();
 module.exports = UserModel;

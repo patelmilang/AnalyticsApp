@@ -4,7 +4,8 @@ const bcryptUtil = require('../utils/bcrypt.util');
 const jwtUtil = require('../utils/jwt.util');
 const crypto = require('crypto');
 let authService = new AuthService();
-const sendmail = require('../utils/mail.util')
+const sendmail = require('../utils/mail.util');
+const { log } = require('console');
 
 exports.register = async (req, res) => {
     const isExist = await authService.findUserByEmail(req.body.email);
@@ -23,13 +24,12 @@ exports.register = async (req, res) => {
         token: crypto.randomBytes(32).toString('hex'),
         auth_type: 'LOCAL',
         is_active: true,
-        is_verified: false
+        is_verified: true
     }
     const user = await authService.createUser(userData);
-
-     const message = `${process.env.BASE_URL}/user/verify/${user.userId}/${user.token}`;
-    // await sendmail(user.email, "Verify Email", message);
-
+    const message = `${process.env.BASE_URL}/user/verify/${user.userId}/${user.token}`;
+    console.log(message);
+    await sendmail(user.email, "Verify Email", message);
     return res.json({
         data: user,
         message: 'User registered successfully.'
@@ -139,13 +139,14 @@ exports.resetpassword = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-
-    const user = await authService.findUserByEmail(req.body.email);
+console.log(req.body);
+    const user = await authService.findUserById(req.user.id)
     if (user) {
-        const result = await authService.update_profile(req.body, req.file.filename);
+        
+        const result = await authService.update_profile(req.body, req.file.filename,req.user.id);
         return res.json({
-            data: [],
-            message: 'reset password successfully.'
+            data: result,
+            message: 'updated successfully.'
         });
     }
     return res.status(400).json({ message: 'Unauthorized.' });

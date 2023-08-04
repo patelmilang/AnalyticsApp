@@ -12,10 +12,11 @@ router.post('/register', validate(schema.register), ErrorHandler(AuthController.
 router.post('/login', validate(schema.login),ErrorHandler(AuthController.login));
 router.post('/google_login', ErrorHandler(AuthController.googlelogin));
 router.get('/verify/:id/:token', ErrorHandler(AuthController.verify_account));
+router.get('/detail', AuthGuard, ErrorHandler(AuthController.getUser));
 // router.get('/all', AuthGuard, ErrorHandler(AuthController.getUser));
 router.get('/logout', AuthGuard, ErrorHandler(AuthController.logout));
 router.put('/reset-password', AuthGuard, ErrorHandler(AuthController.resetpassword));
-router.post('/update', validate(schema.profile),   AuthGuard, uploadfile.upload.single('profile_image'),AuthController.update);
+router.post('/update' ,   AuthGuard, uploadfile.upload.single('profile_image'),AuthController.update);
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }))
 
