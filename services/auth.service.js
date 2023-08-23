@@ -76,23 +76,25 @@ class AuthService {
             }
         });
     }
-    async update_profile(userdata,imageurl,id){
+    async update_profile(userdata){
+        console.log(userdata);
         return await UserModel.update({
-            firstname:userdata.firstname,
-            lastname:userdata.lastname,
-            phone:userdata.phone,
+            firstname:userdata.body.firstname,
+            lastname:userdata.body.lastname,
+            phone:userdata.body.phone,
             // city:userdata.city,
             // country:userdata?.country,
             // zipcode:userdata?.zipcode,
-            querylimit:parseInt(userdata.querylimit),
-            profile_image: imageurl,
-            matrix_of_intrest:userdata.matrix_of_intrest,
-            field:userdata.field
-            //role:userdata.role
+            querylimit:parseInt(userdata.body.querylimit),
+            profile_image: userdata.file.buffer,
+            profile_image_type: userdata.file.mimetype,
+            matrix_of_intrest:userdata.body.matrix_of_intrest,
+            field:userdata.body.field
+             
 
         }, {
             where: {
-                userId: id
+                userId: userdata.user.id
             }
         });
     }

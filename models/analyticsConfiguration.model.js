@@ -9,8 +9,23 @@ const AnalyticsConfigurationModel = sequelize.define('AnalyticsConfiguration', {
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
+    connectionName: {
         type: DataTypes.STRING
+    },
+    dataSourceName:{
+        type: DataTypes.STRING
+    },
+    credentialJson:{
+        type:DataTypes.JSON
+    },
+    ProjectId:{
+        type: DataTypes.STRING 
+    },
+    DatasetId:{
+        type: DataTypes.STRING  
+    },
+    TableId:{
+        type: DataTypes.STRING  
     },
     createdBy:{
         type: DataTypes.INTEGER,

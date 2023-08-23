@@ -85,7 +85,10 @@ const UserModel = sequelize.define('User', {
         type: DataTypes.STRING(200)
     },
     profile_image:{
-        type:DataTypes.STRING(200)
+        type:DataTypes.BLOB('long')
+    },
+    profile_image_type:{
+        type:DataTypes.STRING(100)
     },
     auth_type:{
         type:DataTypes.ENUM(['LOCAL','GOOGLE','FACEBOOK'])

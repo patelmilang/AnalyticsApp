@@ -22,4 +22,10 @@ module.exports = {
         email: Joi.string().email().required()
        
     }),
+    analytics: Joi.object().keys({
+        connectionName: Joi.string().optional(),
+        dataSourceName: Joi.string().optional(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(4).max(16).required()//.external(validatePassword)
+    }),
 }

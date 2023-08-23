@@ -1,10 +1,12 @@
 const multer=require('multer')
 const path = require('path');
+const storage = multer.memoryStorage();
 
 const multerStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, './public/images/profile');
-    },
+    // destination: (req, file, cb) => {
+    //   cb(null, './public/images/profile');
+    // },
+     
     filename: (req, file, cb) => {
     
      cb(null, `image-${Date.now()}` + path.extname(file.originalname))
@@ -21,6 +23,6 @@ const multerStorage = multer.diskStorage({
       
   };
   exports.upload = multer({
-    storage: multerStorage,
+    storage: storage,
     fileFilter: multerFilter
   });
