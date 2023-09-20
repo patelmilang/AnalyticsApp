@@ -9,6 +9,9 @@ const AnalyticsConfigurationModel = sequelize.define('AnalyticsConfiguration', {
         primaryKey: true,
         autoIncrement: true
     },
+    connectionSource:{
+        type:DataTypes.ENUM(['BIG QUERY','AMAZON S3','MY SQL','GOOGLE CLOUD STORAGE','GOOGLE ADS'])
+    },
     connectionName: {
         type: DataTypes.STRING
     },
@@ -18,14 +21,20 @@ const AnalyticsConfigurationModel = sequelize.define('AnalyticsConfiguration', {
     credentialJson:{
         type:DataTypes.JSON
     },
-    ProjectId:{
+    projectId:{
         type: DataTypes.STRING 
     },
-    DatasetId:{
+    datasetId:{
         type: DataTypes.STRING  
     },
-    TableId:{
+    tableId:{
         type: DataTypes.STRING  
+    },
+    is_active:{
+        type:DataTypes.BOOLEAN
+    },
+    status:{
+        type:DataTypes.ENUM(['ON','OFF','CLOSE','ACTIVE','DE-ACTIVE','CONNECTED','DISCONNECTED'])
     },
     createdBy:{
         type: DataTypes.INTEGER,
@@ -36,5 +45,5 @@ const AnalyticsConfigurationModel = sequelize.define('AnalyticsConfiguration', {
         }
      }
 });
-AnalyticsConfigurationModel.sync();
+//AnalyticsConfigurationModel.sync();
 module.exports = AnalyticsConfigurationModel;

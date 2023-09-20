@@ -1,5 +1,6 @@
 const { OAuth2Client } = require("google-auth-library");
 const UserModel = require('../models/user.model');
+const { profile } = require("winston");
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
@@ -76,8 +77,8 @@ class AuthService {
             }
         });
     }
-    async update_profile(userdata){
-        console.log(userdata);
+    async update_profile(userdata,user){
+         
         return await UserModel.update({
             firstname:userdata.body.firstname,
             lastname:userdata.body.lastname,
@@ -86,15 +87,35 @@ class AuthService {
             // country:userdata?.country,
             // zipcode:userdata?.zipcode,
             querylimit:parseInt(userdata.body.querylimit),
-            profile_image: userdata.file.buffer,
-            profile_image_type: userdata.file.mimetype,
+            profile_image: userdata.file!=null? userdata.file.buffer:user.profile_image,
+            profile_image_type: userdata.file!=null?userdata.file.mimetype:user.profile_image_type,
             matrix_of_intrest:userdata.body.matrix_of_intrest,
-            field:userdata.body.field
-             
-
+            field:userdata.body.field ,
+            role: userdata.body.role,
+            company:userdata.body.company       
         }, {
             where: {
                 userId: userdata.user.id
+            }
+        });
+    }
+
+    async generate_user_reset_token(id,token) {
+        return UserModel.update({
+            reset_token:token
+        }, {
+            where: {
+                userId: id
+            }
+        });
+    }
+    async update_user_password_with_token(id,password) {
+        return UserModel.update({
+            reset_token:'',
+            password:password
+        }, {
+            where: {
+                userId: id
             }
         });
     }

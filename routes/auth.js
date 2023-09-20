@@ -17,6 +17,9 @@ router.get('/detail', AuthGuard, ErrorHandler(AuthController.getUser));
 router.get('/logout', AuthGuard, ErrorHandler(AuthController.logout));
 router.put('/reset-password', AuthGuard, ErrorHandler(AuthController.resetpassword));
 router.post('/update' ,   AuthGuard, uploadfile.upload.single('profile_image'),AuthController.update);
+router.post('/mail-forget-password',  ErrorHandler(AuthController.sendforgetpasswordmail));
+router.post('/forget-password',  ErrorHandler(AuthController.setpasswordwithtokem));
+
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }))
 

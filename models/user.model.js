@@ -79,7 +79,43 @@ const UserModel = sequelize.define('User', {
         type: DataTypes.STRING(200)
     },
     role:{
-        type:DataTypes.ENUM(['GUEST','EMPLOYEE','ADMIN'])
+        type:DataTypes.ENUM(['CEO',
+        'COO',
+        'CTO',
+        'CMO',
+        'CFO',
+        'VP of Sales',
+        'Product Manager',
+        'UX/UI Designer',
+        'Software Engineer/Developer',
+        'Data Analyst/Scientist',
+        'Customer Support Representative',
+        'Supply Chain Manager',
+        'Digital Marketing Specialist',
+        'Content Writer/Copywriter',
+        'QA Tester',
+        'Finance Analyst',
+        'Legal Counsel',
+        'HR Manager',
+        'Business Analyst',
+        'Community Manager',
+        'Marketing Manager',
+        'Monetization Manager',
+        'Localization Specialist',
+        'Server and Network Engineer',
+        'Legal Counsel',
+        'Finance Manager',
+        'IT Support',
+        'Store Manager',
+        'Assistant Store Manager',
+        'Inventory Manager',
+        'Retail Sales Associate',
+        'Customer Service Representative',
+        'District Manager',
+        'Regional Manager',
+        'Store Operations Manager',
+        'Manager'
+        ])
     },
     company:{
         type: DataTypes.STRING(200)
@@ -92,7 +128,10 @@ const UserModel = sequelize.define('User', {
     },
     auth_type:{
         type:DataTypes.ENUM(['LOCAL','GOOGLE','FACEBOOK'])
+    },
+    reset_token:{
+        type:DataTypes.STRING(100)
     }
 });
-//UserModel.sync();
+//UserModel.sync({alter:true});
 module.exports = UserModel;

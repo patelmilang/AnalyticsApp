@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.compareHash = (plainPassword, hashedPassword) => bcrypt.compare(plainPassword, hashedPassword);
 
